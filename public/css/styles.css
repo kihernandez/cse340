@@ -84,10 +84,15 @@ nav ul li {
   padding: 0.5rem;
 }
 
-nav ul li:hover {
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 0.2rem;
+}
+
+nav ul li a:hover {
   color: var(--primary-color);
   background-color: white;
-  border-radius: 5px;
 }
 
 /* Hero Section */
@@ -103,7 +108,7 @@ nav ul li:hover {
   overflow: hidden;
 }
 
-.hero > img {
+.hero>img {
   position: absolute;
   right: 0;
   top: 50%;
@@ -186,6 +191,85 @@ nav ul li:hover {
   font-size: 1.5rem;
 }
 
+/************************************
+ * CLASSIFICATION GRID (NEW)
+ ************************************/
+#inv-display {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  margin-right: 2rem;
+}
+
+#inv-display li {
+  list-style: none;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#inv-display a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+#inv-display img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+#inv-display h2 {
+  margin-top: .5rem;
+  font-size: 1.3rem;
+}
+
+/************************************
+ * VEHICLE DETAIL VIEW (NEW)
+ ************************************/
+.vehicle-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.vehicle-detail img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.vehicle-info {
+  background: #f4f4f4;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.vehicle-info p {
+  font-size: 1.1rem;
+  margin: .5rem 0;
+}
+
+/************************************
+ * ERROR PAGES (NEW)
+ ************************************/
+.error-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-container h1 {
+  font-size: 3rem;
+  color: var(--navy-blue);
+}
+
+.error-container p {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+}
+
 /* Footer */
 footer {
   font-family: var(--body-font);
@@ -217,13 +301,13 @@ footer {
     justify-content: space-between;
   }
 
-  nav ul li {
+  nav ul li a {
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
-  nav ul li:hover {
+  nav ul li a:hover {
     color: var(--primary-color);
     background-color: white;
     border-radius: 5px;
@@ -234,7 +318,7 @@ footer {
     padding-left: 2rem;
   }
 
-  .hero > img {
+  .hero>img {
     width: 850px;
     height: auto;
     transform: translate(0, -50%);
@@ -271,5 +355,37 @@ footer {
     width: 200px;
     height: 150px;
     padding: 1rem;
+  }
+
+  /* Classification grid becomes 3 columns */
+  #inv-display {
+    grid-template-columns: repeat(3, 1fr);
+    text-decoration: none;
+  }
+
+  #inv-display h2 {
+    font-size: 1.5rem;
+  }
+
+  #inv-display img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  #inv-display a:hover {
+    text-decoration: underline;
+  }
+
+  /* Detail page becomes side-by-side */
+  .vehicle-detail {
+    flex-direction: row;
+  }
+
+  .vehicle-detail img {
+    width: 50%;
+  }
+
+  .vehicle-info {
+    width: 50%;
   }
 }

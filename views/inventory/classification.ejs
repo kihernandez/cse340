@@ -1,0 +1,13 @@
+<%# Content Heading - Display the title if it exists, otherwise redirect to home %>
+
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# Message %>
+<%# messages() %>
+
+<%# Inventory Items Display %>
+<%- grid %>

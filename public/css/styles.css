@@ -253,7 +253,7 @@ nav ul li a:hover {
 }
 
 /************************************
- * ERROR PAGES (NEW)
+ * ERROR PAGES 
  ************************************/
 .error-container {
   text-align: center;
@@ -269,6 +269,200 @@ nav ul li a:hover {
   font-size: 1.3rem;
   margin-top: 1rem;
 }
+
+/* Log in Page Form */
+.login-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.login-form input {
+  padding: .5rem;
+  font-size: 1rem;
+}
+
+.login-form button {
+  padding: .7rem;
+  background: var(--navy-blue);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background: var(--amber-gold);
+  color: var(--primary-color);
+}
+
+.registration-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Registration Page Form */
+.register-form {
+  max-width: 450px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.register-form input {
+  padding: .5rem;
+  font-size: 1rem;
+}
+
+.register-form button {
+  padding: .7rem;
+  background: var(--navy-blue);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.register-form button:hover {
+  background: var(--amber-gold);
+  color: var(--primary-color);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Neutral when empty */
+input:required {
+  border: 2px solid #ccc;
+}
+
+/* Red only when user has typed and it's invalid */
+input:required:invalid:focus,
+input:required:invalid:not(:placeholder-shown) {
+  border: 2px solid red;
+}
+
+/* Green when valid */
+input:required:valid {
+  border: 2px solid green;
+}
+
+.password-rules {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+/* ============================ 
+  FORM PAGES Add Classification & Add Inventory
+============================ */
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.form-container label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.form-container input,
+.form-container textarea,
+.form-container select {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: var(--body-font);
+}
+
+.form-container textarea {
+  min-height: 100px;
+}
+
+.form-container button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--navy-blue);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background: var(--amber-gold);
+  color: black;
+}
+
+/* Notice Mesage */
+.notice {
+  padding: 12px 16px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  text-align: center;
+}
+
+
+/* Management Links */
+.management-links {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.management-links ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.management-links li {
+  margin: 1rem 0;
+}
+
+.management-links a {
+  font-size: 1.2rem;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.management-links a:hover {
+  text-decoration: underline;
+}
+
 
 /* Footer */
 footer {

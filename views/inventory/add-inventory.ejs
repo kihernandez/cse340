@@ -1,0 +1,57 @@
+<%# Form for adding a new inventory item %>
+<div class="form-container">
+    <h1>Add New Inventory Item</h1>
+
+    <% if (message && message.length> 0) { %>
+        <div class="notice">
+            <%= message[0] %>
+        </div>
+        <% } %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+                    <form action="/inv/add-inventory" method="post" novalidate>
+                        <label for="classificationList">Classification</label>
+                        <%- classificationList %>
+
+                            <label for="inv_make">Make</label>
+                            <input type="text" id="inv_make" name="inv_make" required  placeholder="Make"  value="<%= inv_make %>">
+
+                            <label for="inv_model">Model</label>
+                            <input type="text" id="inv_model" name="inv_model" required  placeholder="Model" value="<%= inv_model %>">
+
+                            <label for="inv_year">Year</label>
+                            <input type="number" id="inv_year" name="inv_year" required placeholder="Year" value="<%= inv_year %>">
+
+                            <label for="inv_price">Price</label>
+                            <input type="number" step="0.01" id="inv_price" name="inv_price" required placeholder="Price"
+                                value="<%= inv_price %>">
+
+                            <label for="inv_description">Description</label>
+                            <textarea id="inv_description" name="inv_description"
+                                required placeholder="Description"><%= inv_description %></textarea>
+
+                            <label for="inv_image">Image Path</label>
+                            <input type="text" id="inv_image" name="inv_image" required  placeholder="Image Path" value="<%= inv_image %>">
+
+                            <label for="inv_thumbnail">Thumbnail Path</label>
+                            <input type="text" id="inv_thumbnail" name="inv_thumbnail" required placeholder="Thumbnail Path"
+                                value="<%= inv_thumbnail %>">
+
+                            <label for="inv_miles">Miles</label>
+                            <input type="number" id="inv_miles" name="inv_miles" required placeholder="Miles" value="<%= inv_miles %>">
+
+                            <label for="inv_color">Color</label>
+                            <input type="text" id="inv_color" name="inv_color" required placeholder="Color" value="<%= inv_color %>">
+
+                            <button type="submit">Add Vehicle</button>
+                    </form>
+</div>

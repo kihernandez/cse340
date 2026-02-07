@@ -12,6 +12,12 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
+const bodyParser = require("body-parser")
+const session = require("express-session")
+const flash = require("connect-flash")
+
+
 
 
 /* ***********************
@@ -21,6 +27,32 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
+/* ***********************
+  * Body Parser Middleware
+  *************************/
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+/* ***********************
+ * Session Middleware
+ *************************/
+app.use(
+  session({
+    secret: "superSecret", 
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+
+/* ***********************
+ * Flash Messages Middleware
+ *************************/
+app.use(flash())
+
+app.use((req, res, next) => {
+  res.locals.message = req.flash("notice")
+  next()
+})
 
 /* ***********************
  * Routes
@@ -30,7 +62,8 @@ app.use(static)
 app.get("/", baseController.buildHome)
 // Inventory routes
 app.use("/inv", inventoryRoute)
-
+//Account Routes
+app.use("/account", accountRoute)
 
 /* ***********************
  * 404 Error Handler

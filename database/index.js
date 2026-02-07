@@ -3,10 +3,11 @@ require("dotenv").config()
 
 let pool
 
-// Local development (no SSL)
+// Local development (SSL required for Render DB)
 if (process.env.NODE_ENV === "development") {
   pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
   })
 
   module.exports = {
@@ -22,6 +23,8 @@ if (process.env.NODE_ENV === "development") {
     },
   }
 
+
+// Production environment (SSL required for Render DB)  
 } else {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,

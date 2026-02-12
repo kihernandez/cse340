@@ -16,8 +16,8 @@ const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
 const session = require("express-session")
 const flash = require("connect-flash")
-
-
+const cookieParser = require("cookie-parser")
+const utilities = require("./utilities/")
 
 
 /* ***********************
@@ -32,27 +32,30 @@ app.set("layout", "./layouts/layout") // not at views root
   *************************/
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
+
 
 /* ***********************
  * Session Middleware
  *************************/
 app.use(
   session({
-    secret: "superSecret", 
+    secret: process.env.SESSION_SECRET, 
     resave: false,
     saveUninitialized: true,
   })
 )
 
+app.use(utilities.checkJWTToken)
+
+
 /* ***********************
  * Flash Messages Middleware
  *************************/
+
 app.use(flash())
 
-app.use((req, res, next) => {
-  res.locals.message = req.flash("notice")
-  next()
-})
+
 
 /* ***********************
  * Routes

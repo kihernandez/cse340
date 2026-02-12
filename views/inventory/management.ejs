@@ -1,15 +1,26 @@
-<%# Inventory Management Page %>
+<%# Inventory Management View %>
+
 <div class="management-links">
     <h1>Inventory Management</h1>
 
-    <% if (message && message.length> 0) { %>
-        <div class="notice">
-            <%= message[0] %>
-        </div>
-        <% } %>
+    <% if (message && message.length > 0) { %>
+        <div class="notice"><%= message[0] %></div>
+    <% } %>
 
-            <ul>
-                <li><a href="/inv/add-classification">Add New Classification</a></li>
-                <li><a href="/inv/add-inventory">Add New Inventory</a></li>
-            </ul>
+    <ul>
+        <li><a href="/inv/add-classification">Add New Classification</a></li>
+        <li><a href="/inv/add-inventory">Add New Inventory</a></li>
+    </ul>
 </div>
+
+<div class="manage-inventory-section">
+    <h2>Manage Inventory</h2>
+    <p>Select a classification to see inventory items.</p>
+
+    <%- classificationSelect %>
+
+    <table id="inventoryDisplay"></table>
+
+</div>
+
+<script src="/js/inventory.js"></script>

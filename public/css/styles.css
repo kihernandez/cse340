@@ -5,7 +5,9 @@
   box-sizing: border-box;
 }
 
-/* Global Styles & Variables */
+/*******************************
+ * GLOBAL VARIABLES & BASE STYLES
+ ****************************/
 :root {
   --primary-color: #000000;
   --secondary-color: #555555;
@@ -29,6 +31,9 @@ h1 {
   color: var(--primary-color);
 }
 
+h2 {
+  text-align: center;
+}
 #wrapper {
   width: 95%;
   margin: 1rem auto;
@@ -96,7 +101,6 @@ nav ul li a:hover {
 }
 
 /* Hero Section */
-
 .hero {
   position: relative;
   display: flex;
@@ -108,7 +112,7 @@ nav ul li a:hover {
   overflow: hidden;
 }
 
-.hero>img {
+.hero > img {
   position: absolute;
   right: 0;
   top: 50%;
@@ -156,7 +160,6 @@ nav ul li a:hover {
 }
 
 /* Features Section */
-
 .features {
   display: flex;
   flex-direction: column-reverse;
@@ -192,7 +195,7 @@ nav ul li a:hover {
 }
 
 /************************************
- * CLASSIFICATION GRID (NEW)
+ * CLASSIFICATION GRID
  ************************************/
 #inv-display {
   display: grid;
@@ -226,8 +229,13 @@ nav ul li a:hover {
   font-size: 1.3rem;
 }
 
+#inv-display a:hover {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
 /************************************
- * VEHICLE DETAIL VIEW (NEW)
+ * VEHICLE DETAIL VIEW
  ************************************/
 .vehicle-detail {
   display: flex;
@@ -253,7 +261,7 @@ nav ul li a:hover {
 }
 
 /************************************
- * ERROR PAGES 
+ * ERROR PAGES
  ************************************/
 .error-container {
   text-align: center;
@@ -270,101 +278,46 @@ nav ul li a:hover {
   margin-top: 1rem;
 }
 
-/* Log in Page Form */
-.login-form {
-  max-width: 400px;
-  margin: 2rem auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background-color: #f4f4f4;
-  padding: 2rem;
-  border-radius: 8px;
-}
+/************************************
+ * FORM VALIDATION COLORS
+ ************************************/
 
-.login-form input {
-  padding: .5rem;
-  font-size: 1rem;
-}
-
-.login-form button {
-  padding: .7rem;
-  background: var(--navy-blue);
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.login-form button:hover {
-  background: var(--amber-gold);
-  color: var(--primary-color);
-}
-
-.registration-link {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-/* Registration Page Form */
-.register-form {
-  max-width: 450px;
-  margin: 2rem auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background-color: #f4f4f4;
-  padding: 2rem;
-  border-radius: 8px;
-}
-
-.register-form input {
-  padding: .5rem;
-  font-size: 1rem;
-}
-
-.register-form button {
-  padding: .7rem;
-  background: var(--navy-blue);
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.register-form button:hover {
-  background: var(--amber-gold);
-  color: var(--primary-color);
-}
-
-.login-link {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-/* Neutral when empty */
+/* Neutral default */
 input:required {
   border: 2px solid #ccc;
+  background-color: transparent;
 }
 
-/* Red only when user has typed and it's invalid */
-input:required:invalid:focus,
-input:required:invalid:not(:placeholder-shown) {
-  border: 2px solid red;
+/* Turn red immediately on focus if empty */
+input:required:focus:placeholder-shown {
+  background-color: lightpink;
 }
 
-/* Green when valid */
-input:required:valid {
-  border: 2px solid green;
+/* Invalid while typing */
+input:user-invalid,
+input:required:invalid:not(:placeholder-shown),
+input:required:invalid:focus {
+  background-color: lightpink;
 }
 
-.password-rules {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  color: #444;
+/* Valid while typing */
+input:user-valid:focus,
+input:required:valid:focus {
+  background-color: lightgreen;
 }
 
-/* ============================ 
-  FORM PAGES Add Classification & Add Inventory
-============================ */
+/* Valid but not focused - return to neutral */
+input:user-valid:not(:focus),
+input:required:valid:not(:focus) {
+  background-color: transparent;
+}
+
+
+
+
+/************************************
+ * FORM CONTAINERS (ADD INVENTORY, ADD CLASSIFICATION)
+ ************************************/
 .form-container {
   max-width: 600px;
   margin: 2rem auto;
@@ -380,67 +333,16 @@ input:required:valid {
   color: var(--primary-color);
 }
 
-.form-container label {
-  display: block;
-  margin-top: 1rem;
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
-.form-container input,
-.form-container textarea,
-.form-container select {
-  width: 100%;
-  padding: 0.7rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-family: var(--body-font);
-}
-
-.form-container textarea {
-  min-height: 100px;
-}
-
-.form-container button {
-  margin-top: 1.5rem;
-  width: 100%;
-  padding: 0.8rem;
-  background: var(--navy-blue);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  cursor: pointer;
-}
-
-.form-container button:hover {
-  background: var(--amber-gold);
-  color: black;
-}
-
-/* Notice Mesage */
-.notice {
-  padding: 12px 16px;
-  margin-bottom: 1rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  text-align: center;
-}
-
-
-/* Management Links */
+/************************************
+ * MANAGEMENT LINKS
+ ************************************/
 .management-links {
   max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
   background: #f4f4f4;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .management-links ul {
@@ -463,15 +365,201 @@ input:required:valid {
   text-decoration: underline;
 }
 
+/************************************
+ * ACCOUNT MANAGEMENT PAGE
+ ************************************/
+.account-management {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  text-align: center;
+}
 
-/* Footer */
+.account-management h1 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.account-management a {
+  font-size: 1.2rem;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.account-management a:hover {
+  text-decoration: underline;
+}
+
+/************************************
+ * INVENTORY MANAGEMENT PAGE
+ ************************************/
+.manage-inventory-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  text-align: center;
+  justify-content: center;
+}
+
+.manage-inventory-section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+#classificationList {
+  width: 100%;
+  padding: 0.8rem;
+  border-left: 5px solid var(--navy-blue);
+  color: var(--primary-color);
+  text-align: center;
+
+}
+
+/************************************
+ * INVENTORY TABLE
+ ************************************/
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#inventoryDisplay thead {
+  background: var(--navy-blue);
+  color: white;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+#inventoryDisplay a {
+  color: var(--navy-blue);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#inventoryDisplay a:hover {
+  color: var(--amber-gold);
+  text-decoration: underline;
+}
+
+/************************************
+ * FOOTER
+ ************************************/
 footer {
   font-family: var(--body-font);
   padding: 1rem;
 }
 
-/* Large Screen */
 
+/************************************
+ * UNIFIED FORM STYLING
+ ************************************/
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 2rem auto;
+  gap: 1rem;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+form label {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+form input,
+form textarea,
+form select {
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+}
+
+/************************************
+ * UNIFIED BUTTONS
+ ************************************/
+button,
+input[type="submit"] {
+  background: var(--navy-blue);
+  color: white;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-family: var(--heading-font);
+  transition: 0.2s ease-in-out;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: var(--amber-gold);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/************************************
+ * UNIFIED DROPDOWNS
+ ************************************/
+select {
+  background-size: 18px;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+/************************************
+ * SUCCESS MESSAGE (NOTICE MESSAGE)
+ ************************************/
+.notice {
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 6px;
+  background-color: #e6f7e9;        
+  border-left: 6px solid #28a745;  
+  color: #155724;                  
+  font-weight: 500;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/************************************
+ * ERROR MESSAGE
+ ************************************/
+.error-message {
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 6px;
+  background-color: #f8d7da;         
+  border-left: 6px solid #dc3545;  
+  color: #721c24;                  
+  font-weight: 500;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+
+/************************************
+ * RESPONSIVE LAYOUT
+ ************************************/
 @media screen and (min-width: 768px) {
   body {
     background-image: url('/images/site/small_check.jpg');
@@ -490,21 +578,8 @@ footer {
     font-size: 3rem;
   }
 
-  nav ul {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
   nav ul li a {
     font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-
-  nav ul li a:hover {
-    color: var(--primary-color);
-    background-color: white;
-    border-radius: 5px;
   }
 
   .hero {
@@ -512,9 +587,8 @@ footer {
     padding-left: 2rem;
   }
 
-  .hero>img {
+  .hero > img {
     width: 850px;
-    height: auto;
     transform: translate(0, -50%);
     top: 50%;
     right: 15rem;
@@ -525,52 +599,14 @@ footer {
   }
 
   .features {
-    display: flex;
     flex-direction: row;
-    align-items: flex-start;
     justify-content: space-evenly;
-    margin: 2rem 0;
-    padding: 0 2rem;
   }
 
-  .row {
-    display: flex;
-    gap: 3rem;
-
-  }
-
-  .upgrade-item {
-    flex-direction: column;
-    width: 200px;
-
-  }
-
-  .upgrade-item img {
-    width: 200px;
-    height: 150px;
-    padding: 1rem;
-  }
-
-  /* Classification grid becomes 3 columns */
   #inv-display {
     grid-template-columns: repeat(3, 1fr);
-    text-decoration: none;
   }
 
-  #inv-display h2 {
-    font-size: 1.5rem;
-  }
-
-  #inv-display img {
-    height: 200px;
-    object-fit: cover;
-  }
-
-  #inv-display a:hover {
-    text-decoration: underline;
-  }
-
-  /* Detail page becomes side-by-side */
   .vehicle-detail {
     flex-direction: row;
   }
@@ -582,4 +618,5 @@ footer {
   .vehicle-info {
     width: 50%;
   }
+
 }

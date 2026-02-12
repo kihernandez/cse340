@@ -1,3 +1,8 @@
+/* ******************************
+ * Inventory Validation Middleware
+ * ***************************** */
+
+
 const { body, validationResult } = require("express-validator")
 const utilities = require(".")
 const validate = {}
@@ -64,6 +69,26 @@ validate.inventoryRules = () => {
   ]
 }
 
+/* ******************************
+ * Validation rules for updating inventory
+ * ***************************** */
+validate.newInventoryRules = () => {
+  return [
+    body("inv_make").trim().isLength({ min: 3 }).withMessage("Make is required."),
+    body("inv_model").trim().isLength({ min: 3 }).withMessage("Model is required."),
+    body("inv_year").isInt({ min: 1900, max: 9999 }).withMessage("Valid year required."),
+    body("inv_price").isFloat().withMessage("Valid price required."),
+    body("inv_description").trim().isLength({ min: 10 }).withMessage("Description required."),
+    body("inv_image").trim().notEmpty().withMessage("Image path required."),
+    body("inv_thumbnail").trim().notEmpty().withMessage("Thumbnail path required."),
+    body("inv_miles").isInt().withMessage("Miles must be a number."),
+    body("inv_color").trim().notEmpty().withMessage("Color required."),
+    body("classification_id").isInt().withMessage("Classification required."),
+    body("inv_id").isInt().withMessage("Invalid inventory ID.")
+  ]
+}
+
+
 // Middleware to check inventory data
 validate.checkInventoryData = async (req, res, next) => {
   const {
@@ -104,6 +129,55 @@ validate.checkInventoryData = async (req, res, next) => {
   }
   next()
 }
+
+/* ******************************
+ * Check update data and return errors to edit view
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const {
+    inv_id,
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_price,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_miles,
+    inv_color
+  } = req.body
+
+  let errors = validationResult(req)
+  const nav = await utilities.getNav()
+  const classificationList = await utilities.buildClassificationList(classification_id)
+
+  if (!errors.isEmpty()) {
+    const itemName = `${inv_make} ${inv_model}`
+
+    return res.render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      errors,
+      message: null,
+      classificationList,
+      inv_id,
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_miles,
+      inv_color
+    })
+  }
+
+  next()
+}
+
 
 
 module.exports = validate

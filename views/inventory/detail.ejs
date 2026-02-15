@@ -1,5 +1,92 @@
 <%# Detail View %>
 <section id="detail-wrapper">
   <h1><%= title %></h1>
+
+  <% if (message && message.length > 0) { %>
+    <div class="notice"><%= message[0] %></div>
+  <% } %>
+
+  <% if (error && error.length > 0) { %>
+    <div class="notice error"><%= error[0] %></div>
+  <% } %>
+
   <%- detailHTML %>
 </section>
+
+<hr>
+
+<section id="reviews-section">
+  <h2>Customer Reviews</h2>
+
+  <% if (reviews && reviews.length > 0) { %>
+    <ul class="reviews-list">
+      <% reviews.forEach(r => { %>
+        <li class="review-item">
+          <strong><%= r.account_firstname %> <%= r.account_lastname %></strong>
+
+          <!-- Star rating -->
+          <span class="stars" data-rating="<%= r.rating %>"></span>
+
+          <p><%= r.review_text %></p>
+          <small><%= new Date(r.created_at).toLocaleString() %></small>
+
+          <!-- Edit/Delete buttons (only for the account user) -->
+          <% if (locals.accountData && locals.accountData.account_id === r.account_id) { %>
+            <div class="review-actions">
+              <a class="edit-review-link" href="/inv/review/edit/<%= r.review_id %>">Edit</a>
+
+              <form action="/inv/review/delete" method="post" class="delete-review-form">
+                <input type="hidden" name="review_id" value="<%= r.review_id %>">
+                <input type="hidden" name="inv_id" value="<%= inv_id %>">
+                <button type="submit" class="delete-review-btn">Delete</button>
+              </form>
+            </div>
+          <% } %>
+
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No reviews yet. Be the first to review this vehicle.</p>
+  <% } %>
+</section>
+
+<hr>
+
+<section id="add-review">
+  <h2>Leave a Review</h2>
+
+  <% if (!locals.accountData) { %>
+    <p>You must <a href="/account/login">log in</a> to leave a review.</p>
+  <% } else { %>
+
+    <form id="reviewForm" action="/inv/review" method="post">
+
+      <label for="rating">Rating (1–5)</label>
+      <select id="rating" name="rating" required>
+        <option value="">Select rating</option>
+        <option value="1">1 - Poor</option>
+        <option value="2">2 - Fair</option>
+        <option value="3">3 - Good</option>
+        <option value="4">4 - Very Good</option>
+        <option value="5">5 - Excellent</option>
+      </select>
+
+      <label for="review_text">Your Review</label>
+      <textarea
+        id="review_text"
+        name="review_text"
+        required
+        minlength="5"
+        placeholder="Write at least 5 characters..."
+      ></textarea>
+
+      <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
+      <button type="submit" name="submitBtn">Submit Review</button>
+    </form>
+
+  <% } %>
+</section>
+
+

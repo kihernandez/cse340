@@ -103,4 +103,36 @@ router.post(
   utilities.handleErrors(invController.deleteInventory)
 )
 
+// Vehicle detail
+router.get("/detail/:inv_id", invController.buildByInvId)
+
+// Add review 
+router.post(
+  "/review",
+  utilities.checkLogin,
+  invController.addReview
+)
+
+// Edit Review View
+router.get(
+  "/review/edit/:review_id",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.buildEditReview)
+)
+
+// Update Review
+router.post(
+  "/review/update",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.updateReview)
+)
+
+// Delete Review
+router.post(
+  "/review/delete",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.deleteReview)
+)
+
+
 module.exports = router

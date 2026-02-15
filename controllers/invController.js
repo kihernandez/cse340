@@ -1,5 +1,6 @@
 const utilities = require("../utilities/")
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 
 const invCont = {}
 
@@ -49,15 +50,22 @@ invCont.buildByInvId = async function (req, res, next) {
 
     const title = `${vehicle.inv_make} ${vehicle.inv_model}`
 
+    const reviews = await reviewModel.getReviewsByInvId(inv_id)
+
     res.render("./inventory/detail", {
       title,
       nav,
       detailHTML,
+      reviews,
+      inv_id: vehicle.inv_id,
+      message: req.flash("notice"),
+      error: req.flash("error")
     })
   } catch (error) {
     next(error)
   }
 }
+
 
 /* ***************************
  *  Trigger intentional 500 error
@@ -369,5 +377,125 @@ invCont.deleteInventory = async function (req, res, next) {
     res.redirect(`/inv/delete/${inv_id}`)
   }
 }
+
+/* ***************************
+ *  Add a review for a vehicle
+ * ************************** */
+invCont.addReview = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.body.inv_id)
+    const rating = parseInt(req.body.rating)
+    const review_text = req.body.review_text?.trim()
+
+    // Server-side validation
+    if (!inv_id || isNaN(inv_id)) {
+      req.flash("notice", "Invalid vehicle.")
+      return res.redirect("back")
+    }
+
+    if (!rating || rating < 1 || rating > 5) {
+      req.flash("notice", "Rating must be between 1 and 5.")
+      return res.redirect("back")
+    }
+
+    if (!review_text || review_text.length < 5) {
+      req.flash("notice", "Review must be at least 5 characters.")
+      return res.redirect("back")
+    }
+
+    // Require logged-in user
+    const accountData = res.locals.accountData
+    if (!accountData || !accountData.account_id) {
+      req.flash("notice", "You must be logged in to leave a review.")
+      return res.redirect("/account/login")
+    }
+
+    await reviewModel.addReview(inv_id, accountData.account_id, rating, review_text)
+
+    req.flash("notice", "Thank you for your review.")
+    res.redirect(`/inv/detail/${inv_id}`)
+  } catch (error) {
+    console.error("addReview error:", error)
+    req.flash("notice", "Sorry, we could not save your review.")
+    res.redirect("back")
+  }
+}
+
+/* ****************************************
+ *  Build Edit Review View
+ **************************************** */
+invCont.buildEditReview = async function (req, res, next) {
+  try {
+    const review_id = req.params.review_id
+    const review = await reviewModel.getReviewById(review_id)
+
+    if (!review) {
+      req.flash("notice", "Review not found.")
+      return res.redirect("back")
+    }
+
+    // Only the owner can edit
+    if (review.account_id !== res.locals.accountData.account_id) {
+      req.flash("notice", "You cannot edit someone else's review.")
+      return res.redirect("back")
+    }
+
+    let nav = await utilities.getNav()
+
+    res.render("./inventory/edit-review", {
+      title: "Edit Review",
+      nav,
+      review,
+      message: req.flash("notice")
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+/* ****************************************
+ *  Update Review
+ **************************************** */
+invCont.updateReview = async function (req, res, next) {
+  try {
+    const { review_id, rating, review_text, inv_id } = req.body
+
+    // Server-side validation
+    if (!rating || rating < 1 || rating > 5) {
+      req.flash("notice", "Rating must be between 1 and 5.")
+      return res.redirect("back")
+    }
+
+    if (!review_text || review_text.trim().length < 5) {
+      req.flash("notice", "Review must be at least 5 characters.")
+      return res.redirect("back")
+    }
+
+    await reviewModel.updateReview(review_id, rating, review_text.trim())
+
+    req.flash("notice", "Review updated successfully.")
+    res.redirect(`/inv/detail/${inv_id}`)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+/* ****************************************
+ *  Delete Review
+ **************************************** */
+invCont.deleteReview = async function (req, res, next) {
+  try {
+    const { review_id, inv_id } = req.body
+
+    await reviewModel.deleteReview(review_id)
+
+    req.flash("notice", "Review deleted.")
+    res.redirect(`/inv/detail/${inv_id}`)
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 module.exports = invCont
